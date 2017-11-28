@@ -1,0 +1,1338 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_3" version="4.3">
+	<Header>
+		<Application name="JPMML-SkLearn" version="1.3.6"/>
+		<Timestamp>2017-09-01T09:38:29Z</Timestamp>
+	</Header>
+	<MiningBuildTask>
+		<Extension>PMMLPipeline(steps=[('regressor', XGBRegressor(base_score=0.5, colsample_bylevel=1, colsample_bytree=1, gamma=0,
+       learning_rate=0.1, max_delta_step=0, max_depth=10,
+       min_child_weight=1, missing=None, n_estimators=10, nthread=-1,
+       objective='reg:linear', reg_alpha=0, reg_lambda=1,
+       scale_pos_weight=1, seed=0, silent=False, subsample=1))])</Extension>
+	</MiningBuildTask>
+	<DataDictionary>
+		<DataField name="y" optype="continuous" dataType="double"/>
+		<DataField name="CRIM" optype="continuous" dataType="float"/>
+		<DataField name="ZN" optype="continuous" dataType="float"/>
+		<DataField name="INDUS" optype="continuous" dataType="float"/>
+		<DataField name="NOX" optype="continuous" dataType="float"/>
+		<DataField name="RM" optype="continuous" dataType="float"/>
+		<DataField name="AGE" optype="continuous" dataType="float"/>
+		<DataField name="DIS" optype="continuous" dataType="float"/>
+		<DataField name="RAD" optype="continuous" dataType="float"/>
+		<DataField name="TAX" optype="continuous" dataType="float"/>
+		<DataField name="PTRATIO" optype="continuous" dataType="float"/>
+		<DataField name="B" optype="continuous" dataType="float"/>
+		<DataField name="LSTAT" optype="continuous" dataType="float"/>
+	</DataDictionary>
+	<MiningModel functionName="regression" x-mathContext="float">
+		<MiningSchema>
+			<MiningField name="y" usageType="target"/>
+			<MiningField name="ZN"/>
+			<MiningField name="AGE"/>
+			<MiningField name="RAD"/>
+			<MiningField name="NOX"/>
+			<MiningField name="B"/>
+			<MiningField name="TAX"/>
+			<MiningField name="PTRATIO"/>
+			<MiningField name="CRIM"/>
+			<MiningField name="LSTAT"/>
+			<MiningField name="INDUS"/>
+			<MiningField name="DIS"/>
+			<MiningField name="RM"/>
+		</MiningSchema>
+		<Targets>
+			<Target field="y" rescaleConstant="0.5"/>
+		</Targets>
+		<Segmentation multipleModelMethod="sum">
+			<Segment id="1">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="AGE"/>
+						<MiningField name="DIS"/>
+						<MiningField name="B"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="LSTAT" operator="lessThan" value="9.725"/>
+							<Node id="4" defaultChild="8">
+								<SimplePredicate field="RM" operator="lessThan" value="6.941"/>
+								<Node id="8" score="3.9599998">
+									<SimplePredicate field="DIS" operator="lessThan" value="1.48495"/>
+								</Node>
+								<Node id="9" defaultChild="16">
+									<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.48495"/>
+									<Node id="16" score="2.2142045">
+										<SimplePredicate field="RM" operator="lessThan" value="6.543"/>
+									</Node>
+									<Node id="17" score="2.6725001">
+										<SimplePredicate field="RM" operator="greaterOrEqual" value="6.543"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="5" defaultChild="10">
+								<SimplePredicate field="RM" operator="greaterOrEqual" value="6.941"/>
+								<Node id="10" score="3.22561">
+									<SimplePredicate field="RM" operator="lessThan" value="7.4370003"/>
+								</Node>
+								<Node id="11" defaultChild="18">
+									<SimplePredicate field="RM" operator="greaterOrEqual" value="7.4370003"/>
+									<Node id="18" score="4.3883333">
+										<SimplePredicate field="CRIM" operator="lessThan" value="2.7422352"/>
+									</Node>
+									<Node id="19" score="1.07">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="2.7422352"/>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="9.725"/>
+							<Node id="6" defaultChild="12">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="16.085"/>
+								<Node id="12" score="1.1825">
+									<SimplePredicate field="B" operator="lessThan" value="116.024994"/>
+								</Node>
+								<Node id="13" score="1.9970139">
+									<SimplePredicate field="B" operator="greaterOrEqual" value="116.024994"/>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="14">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="16.085"/>
+								<Node id="14" score="1.6868">
+									<SimplePredicate field="NOX" operator="lessThan" value="0.60300004"/>
+								</Node>
+								<Node id="15" defaultChild="20">
+									<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.60300004"/>
+									<Node id="20" defaultChild="22">
+										<SimplePredicate field="CRIM" operator="lessThan" value="11.36915"/>
+										<Node id="22" score="0.29000002">
+											<SimplePredicate field="AGE" operator="lessThan" value="77.95"/>
+										</Node>
+										<Node id="23" score="1.3461905">
+											<SimplePredicate field="AGE" operator="greaterOrEqual" value="77.95"/>
+										</Node>
+									</Node>
+									<Node id="21" score="0.86181825">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="11.36915"/>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="2">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="INDUS"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="DIS"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="RM" operator="lessThan" value="6.8375"/>
+							<Node id="4" defaultChild="8">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="14.4"/>
+								<Node id="8" score="3.459383">
+									<SimplePredicate field="DIS" operator="lessThan" value="1.38485"/>
+								</Node>
+								<Node id="9" defaultChild="16">
+									<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.38485"/>
+									<Node id="16" score="2.2539675">
+										<SimplePredicate field="LSTAT" operator="lessThan" value="7.685"/>
+									</Node>
+									<Node id="17" score="1.857675">
+										<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="7.685"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="5" defaultChild="10">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="14.4"/>
+								<Node id="10" defaultChild="18">
+									<SimplePredicate field="CRIM" operator="lessThan" value="6.99237"/>
+									<Node id="18" defaultChild="22">
+										<SimplePredicate field="INDUS" operator="lessThan" value="26.695"/>
+										<Node id="22" score="1.6575793">
+											<SimplePredicate field="CRIM" operator="lessThan" value="0.61479"/>
+										</Node>
+										<Node id="23" score="1.3260173">
+											<SimplePredicate field="CRIM" operator="greaterOrEqual" value="0.61479"/>
+										</Node>
+									</Node>
+									<Node id="19" score="0.7303048">
+										<SimplePredicate field="INDUS" operator="greaterOrEqual" value="26.695"/>
+									</Node>
+								</Node>
+								<Node id="11" defaultChild="20">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="6.99237"/>
+									<Node id="20" defaultChild="24">
+										<SimplePredicate field="CRIM" operator="lessThan" value="38.00685"/>
+										<Node id="24" score="1.1022892">
+											<SimplePredicate field="LSTAT" operator="lessThan" value="23.740002"/>
+										</Node>
+										<Node id="25" defaultChild="26">
+											<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="23.740002"/>
+											<Node id="26" score="1.0959429">
+												<SimplePredicate field="NOX" operator="lessThan" value="0.6735"/>
+											</Node>
+											<Node id="27" score="0.6931544">
+												<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.6735"/>
+											</Node>
+										</Node>
+									</Node>
+									<Node id="21" score="0.45818183">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="38.00685"/>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="RM" operator="greaterOrEqual" value="6.8375"/>
+							<Node id="6" defaultChild="12">
+								<SimplePredicate field="RM" operator="lessThan" value="7.4370003"/>
+								<Node id="12" score="2.824043">
+									<SimplePredicate field="NOX" operator="lessThan" value="0.65900004"/>
+								</Node>
+								<Node id="13" score="0.9373744">
+									<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.65900004"/>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="14">
+								<SimplePredicate field="RM" operator="greaterOrEqual" value="7.4370003"/>
+								<Node id="14" score="3.9641278">
+									<SimplePredicate field="CRIM" operator="lessThan" value="2.7422352"/>
+								</Node>
+								<Node id="15" score="1.0165">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="2.7422352"/>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="3">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="AGE"/>
+						<MiningField name="DIS"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="LSTAT" operator="lessThan" value="9.63"/>
+							<Node id="4" defaultChild="8">
+								<SimplePredicate field="RM" operator="lessThan" value="6.941"/>
+								<Node id="8" score="3.3664494">
+									<SimplePredicate field="DIS" operator="lessThan" value="1.48495"/>
+								</Node>
+								<Node id="9" defaultChild="16">
+									<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.48495"/>
+									<Node id="16" score="1.5768049">
+										<SimplePredicate field="RM" operator="lessThan" value="6.1245003"/>
+									</Node>
+									<Node id="17" score="2.0458689">
+										<SimplePredicate field="RM" operator="greaterOrEqual" value="6.1245003"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="5" defaultChild="10">
+								<SimplePredicate field="RM" operator="greaterOrEqual" value="6.941"/>
+								<Node id="10" score="2.650909">
+									<SimplePredicate field="RM" operator="lessThan" value="7.4370003"/>
+								</Node>
+								<Node id="11" defaultChild="18">
+									<SimplePredicate field="RM" operator="greaterOrEqual" value="7.4370003"/>
+									<Node id="18" score="3.5809288">
+										<SimplePredicate field="CRIM" operator="lessThan" value="2.7422352"/>
+									</Node>
+									<Node id="19" score="0.965675">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="2.7422352"/>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="9.63"/>
+							<Node id="6" defaultChild="12">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="19.23"/>
+								<Node id="12" defaultChild="20">
+									<SimplePredicate field="LSTAT" operator="lessThan" value="15"/>
+									<Node id="20" score="1.6461219">
+										<SimplePredicate field="CRIM" operator="lessThan" value="16.971401"/>
+									</Node>
+									<Node id="21" score="0.77851623">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="16.971401"/>
+									</Node>
+								</Node>
+								<Node id="13" defaultChild="22">
+									<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="15"/>
+									<Node id="22" score="1.5005331">
+										<SimplePredicate field="CRIM" operator="lessThan" value="0.65402"/>
+									</Node>
+									<Node id="23" score="1.1591222">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="0.65402"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="14">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="19.23"/>
+								<Node id="14" score="1.2871788">
+									<SimplePredicate field="NOX" operator="lessThan" value="0.60300004"/>
+								</Node>
+								<Node id="15" defaultChild="24">
+									<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.60300004"/>
+									<Node id="24" defaultChild="26">
+										<SimplePredicate field="CRIM" operator="lessThan" value="24.597752"/>
+										<Node id="26" score="0.33156702">
+											<SimplePredicate field="CRIM" operator="lessThan" value="0.22863"/>
+										</Node>
+										<Node id="27" defaultChild="30">
+											<SimplePredicate field="CRIM" operator="greaterOrEqual" value="0.22863"/>
+											<Node id="30" score="0.3584246">
+												<SimplePredicate field="AGE" operator="lessThan" value="77.95"/>
+											</Node>
+											<Node id="31" score="0.8814749">
+												<SimplePredicate field="AGE" operator="greaterOrEqual" value="77.95"/>
+											</Node>
+										</Node>
+									</Node>
+									<Node id="25" defaultChild="28">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="24.597752"/>
+										<Node id="28" score="0.2476257">
+											<SimplePredicate field="DIS" operator="lessThan" value="1.5981"/>
+										</Node>
+										<Node id="29" score="0.5503487">
+											<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.5981"/>
+										</Node>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="4">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="INDUS"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="DIS"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="RM" operator="lessThan" value="6.8375"/>
+							<Node id="4" defaultChild="8">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="14.4"/>
+								<Node id="8" score="2.919236">
+									<SimplePredicate field="DIS" operator="lessThan" value="1.38485"/>
+								</Node>
+								<Node id="9" defaultChild="16">
+									<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.38485"/>
+									<Node id="16" score="1.527676">
+										<SimplePredicate field="RM" operator="lessThan" value="6.543"/>
+									</Node>
+									<Node id="17" score="1.9555361">
+										<SimplePredicate field="RM" operator="greaterOrEqual" value="6.543"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="5" defaultChild="10">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="14.4"/>
+								<Node id="10" defaultChild="18">
+									<SimplePredicate field="CRIM" operator="lessThan" value="6.99237"/>
+									<Node id="18" defaultChild="22">
+										<SimplePredicate field="INDUS" operator="lessThan" value="26.695"/>
+										<Node id="22" score="1.3533114">
+											<SimplePredicate field="CRIM" operator="lessThan" value="0.61479"/>
+										</Node>
+										<Node id="23" score="1.0793784">
+											<SimplePredicate field="CRIM" operator="greaterOrEqual" value="0.61479"/>
+										</Node>
+									</Node>
+									<Node id="19" score="0.5985964">
+										<SimplePredicate field="INDUS" operator="greaterOrEqual" value="26.695"/>
+									</Node>
+								</Node>
+								<Node id="11" defaultChild="20">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="6.99237"/>
+									<Node id="20" defaultChild="24">
+										<SimplePredicate field="CRIM" operator="lessThan" value="38.00685"/>
+										<Node id="24" score="0.9745725">
+											<SimplePredicate field="NOX" operator="lessThan" value="0.675"/>
+										</Node>
+										<Node id="25" defaultChild="26">
+											<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.675"/>
+											<Node id="26" score="0.92472404">
+												<SimplePredicate field="LSTAT" operator="lessThan" value="19.645"/>
+											</Node>
+											<Node id="27" score="0.6039631">
+												<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="19.645"/>
+											</Node>
+										</Node>
+									</Node>
+									<Node id="21" score="0.38422838">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="38.00685"/>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="RM" operator="greaterOrEqual" value="6.8375"/>
+							<Node id="6" defaultChild="12">
+								<SimplePredicate field="RM" operator="lessThan" value="7.4370003"/>
+								<Node id="12" score="2.308744">
+									<SimplePredicate field="NOX" operator="lessThan" value="0.65900004"/>
+								</Node>
+								<Node id="13" score="0.7896523">
+									<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.65900004"/>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="14">
+								<SimplePredicate field="RM" operator="greaterOrEqual" value="7.4370003"/>
+								<Node id="14" score="3.2347724">
+									<SimplePredicate field="CRIM" operator="lessThan" value="2.7422352"/>
+								</Node>
+								<Node id="15" score="0.91739124">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="2.7422352"/>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="5">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="AGE"/>
+						<MiningField name="DIS"/>
+						<MiningField name="PTRATIO"/>
+						<MiningField name="B"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="LSTAT" operator="lessThan" value="9.63"/>
+							<Node id="4" defaultChild="8">
+								<SimplePredicate field="RM" operator="lessThan" value="6.941"/>
+								<Node id="8" score="2.8635945">
+									<SimplePredicate field="DIS" operator="lessThan" value="1.48495"/>
+								</Node>
+								<Node id="9" defaultChild="16">
+									<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.48495"/>
+									<Node id="16" defaultChild="24">
+										<SimplePredicate field="RM" operator="lessThan" value="6.543"/>
+										<Node id="24" score="1.465824">
+											<SimplePredicate field="RM" operator="lessThan" value="6.539"/>
+										</Node>
+										<Node id="25" score="0.4177288">
+											<SimplePredicate field="RM" operator="greaterOrEqual" value="6.539"/>
+										</Node>
+									</Node>
+									<Node id="17" score="1.7966292">
+										<SimplePredicate field="RM" operator="greaterOrEqual" value="6.543"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="5" defaultChild="10">
+								<SimplePredicate field="RM" operator="greaterOrEqual" value="6.941"/>
+								<Node id="10" defaultChild="18">
+									<SimplePredicate field="RM" operator="lessThan" value="7.4370003"/>
+									<Node id="18" score="2.1911447">
+										<SimplePredicate field="PTRATIO" operator="lessThan" value="20.6"/>
+									</Node>
+									<Node id="19" score="0.6195347">
+										<SimplePredicate field="PTRATIO" operator="greaterOrEqual" value="20.6"/>
+									</Node>
+								</Node>
+								<Node id="11" score="2.8840444">
+									<SimplePredicate field="RM" operator="greaterOrEqual" value="7.4370003"/>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="9.63"/>
+							<Node id="6" defaultChild="12">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="19.83"/>
+								<Node id="12" score="0.80365133">
+									<SimplePredicate field="B" operator="lessThan" value="116.024994"/>
+								</Node>
+								<Node id="13" defaultChild="20">
+									<SimplePredicate field="B" operator="greaterOrEqual" value="116.024994"/>
+									<Node id="20" defaultChild="26">
+										<SimplePredicate field="CRIM" operator="lessThan" value="22.2054"/>
+										<Node id="26" defaultChild="32">
+											<SimplePredicate field="PTRATIO" operator="lessThan" value="18.75"/>
+											<Node id="32" score="0.54476756">
+												<SimplePredicate field="RM" operator="lessThan" value="5.208"/>
+											</Node>
+											<Node id="33" score="1.397687">
+												<SimplePredicate field="RM" operator="greaterOrEqual" value="5.208"/>
+											</Node>
+										</Node>
+										<Node id="27" score="1.186067">
+											<SimplePredicate field="PTRATIO" operator="greaterOrEqual" value="18.75"/>
+										</Node>
+									</Node>
+									<Node id="21" score="0.36112043">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="22.2054"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="14">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="19.83"/>
+								<Node id="14" score="1.0163864">
+									<SimplePredicate field="NOX" operator="lessThan" value="0.60300004"/>
+								</Node>
+								<Node id="15" defaultChild="22">
+									<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.60300004"/>
+									<Node id="22" defaultChild="28">
+										<SimplePredicate field="CRIM" operator="lessThan" value="24.719952"/>
+										<Node id="28" score="0.17466708">
+											<SimplePredicate field="CRIM" operator="lessThan" value="0.19541499"/>
+										</Node>
+										<Node id="29" defaultChild="34">
+											<SimplePredicate field="CRIM" operator="greaterOrEqual" value="0.19541499"/>
+											<Node id="34" score="0.46048337">
+												<SimplePredicate field="AGE" operator="lessThan" value="91.8"/>
+											</Node>
+											<Node id="35" defaultChild="36">
+												<SimplePredicate field="AGE" operator="greaterOrEqual" value="91.8"/>
+												<Node id="36" score="0.33946916">
+													<SimplePredicate field="B" operator="lessThan" value="35.155"/>
+												</Node>
+												<Node id="37" defaultChild="38">
+													<SimplePredicate field="B" operator="greaterOrEqual" value="35.155"/>
+													<Node id="38" score="0.2033041">
+														<SimplePredicate field="LSTAT" operator="lessThan" value="20.115"/>
+													</Node>
+													<Node id="39" score="0.7474091">
+														<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="20.115"/>
+													</Node>
+												</Node>
+											</Node>
+										</Node>
+									</Node>
+									<Node id="23" defaultChild="30">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="24.719952"/>
+										<Node id="30" score="0.19474326">
+											<SimplePredicate field="DIS" operator="lessThan" value="1.5981"/>
+										</Node>
+										<Node id="31" score="0.46453968">
+											<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.5981"/>
+										</Node>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="6">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="INDUS"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="AGE"/>
+						<MiningField name="DIS"/>
+						<MiningField name="RAD"/>
+						<MiningField name="PTRATIO"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="LSTAT" operator="lessThan" value="5.4399996"/>
+							<Node id="4" score="1.9489233">
+								<SimplePredicate field="RM" operator="lessThan" value="7.433"/>
+							</Node>
+							<Node id="5" defaultChild="8">
+								<SimplePredicate field="RM" operator="greaterOrEqual" value="7.433"/>
+								<Node id="8" score="2.675388">
+									<SimplePredicate field="CRIM" operator="lessThan" value="2.7422352"/>
+								</Node>
+								<Node id="9" score="0.7273194">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="2.7422352"/>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="5.4399996"/>
+							<Node id="6" defaultChild="10">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="15"/>
+								<Node id="10" defaultChild="14">
+									<SimplePredicate field="RM" operator="lessThan" value="7.0835"/>
+									<Node id="14" defaultChild="22">
+										<SimplePredicate field="LSTAT" operator="lessThan" value="9.950001"/>
+										<Node id="22" defaultChild="32">
+											<SimplePredicate field="DIS" operator="lessThan" value="4.46815"/>
+											<Node id="32" defaultChild="38">
+												<SimplePredicate field="RAD" operator="lessThan" value="1.5"/>
+												<Node id="38" score="0.13789077">
+													<SimplePredicate field="RM" operator="lessThan" value="6.075"/>
+												</Node>
+												<Node id="39" score="0.9317315">
+													<SimplePredicate field="RM" operator="greaterOrEqual" value="6.075"/>
+												</Node>
+											</Node>
+											<Node id="33" score="1.5890409">
+												<SimplePredicate field="RAD" operator="greaterOrEqual" value="1.5"/>
+											</Node>
+										</Node>
+										<Node id="23" score="1.2568173">
+											<SimplePredicate field="DIS" operator="greaterOrEqual" value="4.46815"/>
+										</Node>
+									</Node>
+									<Node id="15" defaultChild="24">
+										<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="9.950001"/>
+										<Node id="24" score="1.1838756">
+											<SimplePredicate field="CRIM" operator="lessThan" value="25.997799"/>
+										</Node>
+										<Node id="25" score="0.4652767">
+											<SimplePredicate field="CRIM" operator="greaterOrEqual" value="25.997799"/>
+										</Node>
+									</Node>
+								</Node>
+								<Node id="11" defaultChild="16">
+									<SimplePredicate field="RM" operator="greaterOrEqual" value="7.0835"/>
+									<Node id="16" score="2.0147974">
+										<SimplePredicate field="CRIM" operator="lessThan" value="10.21718"/>
+									</Node>
+									<Node id="17" score="0.44056883">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="10.21718"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="12">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="15"/>
+								<Node id="12" defaultChild="18">
+									<SimplePredicate field="CRIM" operator="lessThan" value="5.76921"/>
+									<Node id="18" defaultChild="26">
+										<SimplePredicate field="INDUS" operator="lessThan" value="26.695"/>
+										<Node id="26" defaultChild="34">
+											<SimplePredicate field="PTRATIO" operator="lessThan" value="20.95"/>
+											<Node id="34" score="1.1513895">
+												<SimplePredicate field="NOX" operator="lessThan" value="0.7065"/>
+											</Node>
+											<Node id="35" score="0.8382581">
+												<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.7065"/>
+											</Node>
+										</Node>
+										<Node id="27" score="0.7719299">
+											<SimplePredicate field="PTRATIO" operator="greaterOrEqual" value="20.95"/>
+										</Node>
+									</Node>
+									<Node id="19" score="0.48482448">
+										<SimplePredicate field="INDUS" operator="greaterOrEqual" value="26.695"/>
+									</Node>
+								</Node>
+								<Node id="13" defaultChild="20">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="5.76921"/>
+									<Node id="20" defaultChild="28">
+										<SimplePredicate field="LSTAT" operator="lessThan" value="20.314999"/>
+										<Node id="28" score="0.22389324">
+											<SimplePredicate field="AGE" operator="lessThan" value="65.15"/>
+										</Node>
+										<Node id="29" score="0.78460187">
+											<SimplePredicate field="AGE" operator="greaterOrEqual" value="65.15"/>
+										</Node>
+									</Node>
+									<Node id="21" defaultChild="30">
+										<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="20.314999"/>
+										<Node id="30" score="0.7566164">
+											<SimplePredicate field="NOX" operator="lessThan" value="0.675"/>
+										</Node>
+										<Node id="31" defaultChild="36">
+											<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.675"/>
+											<Node id="36" score="0.17551942">
+												<SimplePredicate field="DIS" operator="lessThan" value="1.4328"/>
+											</Node>
+											<Node id="37" defaultChild="40">
+												<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.4328"/>
+												<Node id="40" score="0.12515226">
+													<SimplePredicate field="LSTAT" operator="lessThan" value="20.470001"/>
+												</Node>
+												<Node id="41" score="0.49567142">
+													<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="20.470001"/>
+												</Node>
+											</Node>
+										</Node>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="7">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="INDUS"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="DIS"/>
+						<MiningField name="B"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="RM" operator="lessThan" value="6.941"/>
+							<Node id="4" defaultChild="8">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="14.4"/>
+								<Node id="8" score="2.3276289">
+									<SimplePredicate field="DIS" operator="lessThan" value="1.38485"/>
+								</Node>
+								<Node id="9" defaultChild="16">
+									<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.38485"/>
+									<Node id="16" defaultChild="22">
+										<SimplePredicate field="RM" operator="lessThan" value="6.543"/>
+										<Node id="22" defaultChild="30">
+											<SimplePredicate field="RM" operator="lessThan" value="6.0775003"/>
+											<Node id="30" score="1.0164822">
+												<SimplePredicate field="RM" operator="lessThan" value="6.0705"/>
+											</Node>
+											<Node id="31" score="0.2300785">
+												<SimplePredicate field="RM" operator="greaterOrEqual" value="6.0705"/>
+											</Node>
+										</Node>
+										<Node id="23" defaultChild="32">
+											<SimplePredicate field="RM" operator="greaterOrEqual" value="6.0775003"/>
+											<Node id="32" score="1.1949108">
+												<SimplePredicate field="RM" operator="lessThan" value="6.539"/>
+											</Node>
+											<Node id="33" score="0.33400145">
+												<SimplePredicate field="RM" operator="greaterOrEqual" value="6.539"/>
+											</Node>
+										</Node>
+									</Node>
+									<Node id="17" score="1.4415051">
+										<SimplePredicate field="RM" operator="greaterOrEqual" value="6.543"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="5" defaultChild="10">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="14.4"/>
+								<Node id="10" defaultChild="18">
+									<SimplePredicate field="CRIM" operator="lessThan" value="5.7819"/>
+									<Node id="18" defaultChild="24">
+										<SimplePredicate field="B" operator="lessThan" value="378.085"/>
+										<Node id="24" score="0.77549917">
+											<SimplePredicate field="INDUS" operator="lessThan" value="26.695"/>
+										</Node>
+										<Node id="25" score="0.20649861">
+											<SimplePredicate field="INDUS" operator="greaterOrEqual" value="26.695"/>
+										</Node>
+									</Node>
+									<Node id="19" defaultChild="26">
+										<SimplePredicate field="B" operator="greaterOrEqual" value="378.085"/>
+										<Node id="26" score="0.719737">
+											<SimplePredicate field="DIS" operator="lessThan" value="1.9864"/>
+										</Node>
+										<Node id="27" defaultChild="34">
+											<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.9864"/>
+											<Node id="34" score="1.0321242">
+												<SimplePredicate field="LSTAT" operator="lessThan" value="30.369999"/>
+											</Node>
+											<Node id="35" score="0.28736767">
+												<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="30.369999"/>
+											</Node>
+										</Node>
+									</Node>
+								</Node>
+								<Node id="11" defaultChild="20">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="5.7819"/>
+									<Node id="20" score="0.7876948">
+										<SimplePredicate field="NOX" operator="lessThan" value="0.6695"/>
+									</Node>
+									<Node id="21" defaultChild="28">
+										<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.6695"/>
+										<Node id="28" defaultChild="36">
+											<SimplePredicate field="LSTAT" operator="lessThan" value="25.735"/>
+											<Node id="36" score="0.6790163">
+												<SimplePredicate field="CRIM" operator="lessThan" value="11.36915"/>
+											</Node>
+											<Node id="37" score="0.45663133">
+												<SimplePredicate field="CRIM" operator="greaterOrEqual" value="11.36915"/>
+											</Node>
+										</Node>
+										<Node id="29" score="0.34817454">
+											<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="25.735"/>
+										</Node>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="RM" operator="greaterOrEqual" value="6.941"/>
+							<Node id="6" defaultChild="12">
+								<SimplePredicate field="RM" operator="lessThan" value="7.4370003"/>
+								<Node id="12" score="1.7654625">
+									<SimplePredicate field="CRIM" operator="lessThan" value="7.393425"/>
+								</Node>
+								<Node id="13" score="0.61185277">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="7.393425"/>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="14">
+								<SimplePredicate field="RM" operator="greaterOrEqual" value="7.4370003"/>
+								<Node id="14" score="2.3956757">
+									<SimplePredicate field="CRIM" operator="lessThan" value="2.7422352"/>
+								</Node>
+								<Node id="15" score="0.69095343">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="2.7422352"/>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="8">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="ZN"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="AGE"/>
+						<MiningField name="DIS"/>
+						<MiningField name="RAD"/>
+						<MiningField name="PTRATIO"/>
+						<MiningField name="B"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="LSTAT" operator="lessThan" value="5.4399996"/>
+							<Node id="4" score="1.2810336">
+								<SimplePredicate field="RM" operator="lessThan" value="6.6590004"/>
+							</Node>
+							<Node id="5" defaultChild="8">
+								<SimplePredicate field="RM" operator="greaterOrEqual" value="6.6590004"/>
+								<Node id="8" score="0.8056745">
+									<SimplePredicate field="AGE" operator="lessThan" value="7.6"/>
+								</Node>
+								<Node id="9" score="1.951998">
+									<SimplePredicate field="AGE" operator="greaterOrEqual" value="7.6"/>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="5.4399996"/>
+							<Node id="6" defaultChild="10">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="14.795"/>
+								<Node id="10" defaultChild="14">
+									<SimplePredicate field="RM" operator="lessThan" value="7.0835"/>
+									<Node id="14" score="1.9343112">
+										<SimplePredicate field="DIS" operator="lessThan" value="1.22715"/>
+									</Node>
+									<Node id="15" defaultChild="22">
+										<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.22715"/>
+										<Node id="22" defaultChild="30">
+											<SimplePredicate field="RM" operator="lessThan" value="6.0615"/>
+											<Node id="30" defaultChild="42">
+												<SimplePredicate field="RAD" operator="lessThan" value="1.5"/>
+												<Node id="42" score="0.080172114">
+													<SimplePredicate field="ZN" operator="lessThan" value="17.5"/>
+												</Node>
+												<Node id="43" score="0.58606243">
+													<SimplePredicate field="ZN" operator="greaterOrEqual" value="17.5"/>
+												</Node>
+											</Node>
+											<Node id="31" score="0.9224518">
+												<SimplePredicate field="RAD" operator="greaterOrEqual" value="1.5"/>
+											</Node>
+										</Node>
+										<Node id="23" defaultChild="32">
+											<SimplePredicate field="RM" operator="greaterOrEqual" value="6.0615"/>
+											<Node id="32" score="1.1519026">
+												<SimplePredicate field="PTRATIO" operator="lessThan" value="19.95"/>
+											</Node>
+											<Node id="33" defaultChild="44">
+												<SimplePredicate field="PTRATIO" operator="greaterOrEqual" value="19.95"/>
+												<Node id="44" score="0.21857457">
+													<SimplePredicate field="RM" operator="lessThan" value="6.0765"/>
+												</Node>
+												<Node id="45" defaultChild="50">
+													<SimplePredicate field="RM" operator="greaterOrEqual" value="6.0765"/>
+													<Node id="50" score="0.9484336">
+														<SimplePredicate field="CRIM" operator="lessThan" value="25.997799"/>
+													</Node>
+													<Node id="51" score="0.23432055">
+														<SimplePredicate field="CRIM" operator="greaterOrEqual" value="25.997799"/>
+													</Node>
+												</Node>
+											</Node>
+										</Node>
+									</Node>
+								</Node>
+								<Node id="11" defaultChild="16">
+									<SimplePredicate field="RM" operator="greaterOrEqual" value="7.0835"/>
+									<Node id="16" score="1.6399174">
+										<SimplePredicate field="CRIM" operator="lessThan" value="10.21718"/>
+									</Node>
+									<Node id="17" score="0.38794774">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="10.21718"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="12">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="14.795"/>
+								<Node id="12" defaultChild="18">
+									<SimplePredicate field="CRIM" operator="lessThan" value="5.7819"/>
+									<Node id="18" defaultChild="24">
+										<SimplePredicate field="PTRATIO" operator="lessThan" value="20.95"/>
+										<Node id="24" defaultChild="34">
+											<SimplePredicate field="DIS" operator="lessThan" value="1.9904001"/>
+											<Node id="34" score="0.6555112">
+												<SimplePredicate field="LSTAT" operator="lessThan" value="29.605"/>
+											</Node>
+											<Node id="35" score="0.15773049">
+												<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="29.605"/>
+											</Node>
+										</Node>
+										<Node id="25" defaultChild="36">
+											<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.9904001"/>
+											<Node id="36" score="0.24359412">
+												<SimplePredicate field="B" operator="lessThan" value="16.244999"/>
+											</Node>
+											<Node id="37" defaultChild="46">
+												<SimplePredicate field="B" operator="greaterOrEqual" value="16.244999"/>
+												<Node id="46" defaultChild="52">
+													<SimplePredicate field="RM" operator="lessThan" value="6.263"/>
+													<Node id="52" score="0.98691416">
+														<SimplePredicate field="LSTAT" operator="lessThan" value="30.369999"/>
+													</Node>
+													<Node id="53" score="0.2729993">
+														<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="30.369999"/>
+													</Node>
+												</Node>
+												<Node id="47" score="0.60988104">
+													<SimplePredicate field="RM" operator="greaterOrEqual" value="6.263"/>
+												</Node>
+											</Node>
+										</Node>
+									</Node>
+									<Node id="19" score="0.6322562">
+										<SimplePredicate field="PTRATIO" operator="greaterOrEqual" value="20.95"/>
+									</Node>
+								</Node>
+								<Node id="13" defaultChild="20">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="5.7819"/>
+									<Node id="20" defaultChild="26">
+										<SimplePredicate field="NOX" operator="lessThan" value="0.6695"/>
+										<Node id="26" score="0.24558483">
+											<SimplePredicate field="AGE" operator="lessThan" value="70.8"/>
+										</Node>
+										<Node id="27" score="0.732252">
+											<SimplePredicate field="AGE" operator="greaterOrEqual" value="70.8"/>
+										</Node>
+									</Node>
+									<Node id="21" defaultChild="28">
+										<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.6695"/>
+										<Node id="28" defaultChild="38">
+											<SimplePredicate field="LSTAT" operator="lessThan" value="19.645"/>
+											<Node id="38" score="0.6472208">
+												<SimplePredicate field="CRIM" operator="lessThan" value="14.1671"/>
+											</Node>
+											<Node id="39" score="0.24672067">
+												<SimplePredicate field="CRIM" operator="greaterOrEqual" value="14.1671"/>
+											</Node>
+										</Node>
+										<Node id="29" defaultChild="40">
+											<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="19.645"/>
+											<Node id="40" defaultChild="48">
+												<SimplePredicate field="LSTAT" operator="lessThan" value="28.665"/>
+												<Node id="48" score="0.18261294">
+													<SimplePredicate field="LSTAT" operator="lessThan" value="20.115"/>
+												</Node>
+												<Node id="49" score="0.4529185">
+													<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="20.115"/>
+												</Node>
+											</Node>
+											<Node id="41" score="0.26995596">
+												<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="28.665"/>
+											</Node>
+										</Node>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="9">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="AGE"/>
+						<MiningField name="DIS"/>
+						<MiningField name="TAX"/>
+						<MiningField name="PTRATIO"/>
+						<MiningField name="B"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="LSTAT" operator="lessThan" value="5.4399996"/>
+							<Node id="4" defaultChild="8">
+								<SimplePredicate field="DIS" operator="lessThan" value="3.20745"/>
+								<Node id="8" score="2.1945736">
+									<SimplePredicate field="LSTAT" operator="lessThan" value="5.205"/>
+								</Node>
+								<Node id="9" score="0.82267183">
+									<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="5.205"/>
+								</Node>
+							</Node>
+							<Node id="5" defaultChild="10">
+								<SimplePredicate field="DIS" operator="greaterOrEqual" value="3.20745"/>
+								<Node id="10" score="1.0489655">
+									<SimplePredicate field="RM" operator="lessThan" value="6.7275"/>
+								</Node>
+								<Node id="11" score="1.5881213">
+									<SimplePredicate field="RM" operator="greaterOrEqual" value="6.7275"/>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="5.4399996"/>
+							<Node id="6" defaultChild="12">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="14.795"/>
+								<Node id="12" defaultChild="16">
+									<SimplePredicate field="RM" operator="lessThan" value="7.0835"/>
+									<Node id="16" score="1.8053572">
+										<SimplePredicate field="DIS" operator="lessThan" value="1.22715"/>
+									</Node>
+									<Node id="17" defaultChild="24">
+										<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.22715"/>
+										<Node id="24" score="0.8202305">
+											<SimplePredicate field="RM" operator="lessThan" value="6.0615"/>
+										</Node>
+										<Node id="25" defaultChild="32">
+											<SimplePredicate field="RM" operator="greaterOrEqual" value="6.0615"/>
+											<Node id="32" defaultChild="42">
+												<SimplePredicate field="PTRATIO" operator="lessThan" value="19.95"/>
+												<Node id="42" score="1.0539806">
+													<SimplePredicate field="TAX" operator="lessThan" value="416.5"/>
+												</Node>
+												<Node id="43" score="0.6460433">
+													<SimplePredicate field="TAX" operator="greaterOrEqual" value="416.5"/>
+												</Node>
+											</Node>
+											<Node id="33" defaultChild="44">
+												<SimplePredicate field="PTRATIO" operator="greaterOrEqual" value="19.95"/>
+												<Node id="44" score="0.20764585">
+													<SimplePredicate field="RM" operator="lessThan" value="6.0765"/>
+												</Node>
+												<Node id="45" defaultChild="50">
+													<SimplePredicate field="RM" operator="greaterOrEqual" value="6.0765"/>
+													<Node id="50" score="0.85590357">
+														<SimplePredicate field="CRIM" operator="lessThan" value="25.997799"/>
+													</Node>
+													<Node id="51" score="0.22260451">
+														<SimplePredicate field="CRIM" operator="greaterOrEqual" value="25.997799"/>
+													</Node>
+												</Node>
+											</Node>
+										</Node>
+									</Node>
+								</Node>
+								<Node id="13" defaultChild="18">
+									<SimplePredicate field="RM" operator="greaterOrEqual" value="7.0835"/>
+									<Node id="18" score="1.4841254">
+										<SimplePredicate field="CRIM" operator="lessThan" value="10.21718"/>
+									</Node>
+									<Node id="19" score="0.36855036">
+										<SimplePredicate field="CRIM" operator="greaterOrEqual" value="10.21718"/>
+									</Node>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="14">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="14.795"/>
+								<Node id="14" defaultChild="20">
+									<SimplePredicate field="CRIM" operator="lessThan" value="5.7819"/>
+									<Node id="20" defaultChild="26">
+										<SimplePredicate field="PTRATIO" operator="lessThan" value="20.95"/>
+										<Node id="26" defaultChild="34">
+											<SimplePredicate field="DIS" operator="lessThan" value="1.9904001"/>
+											<Node id="34" score="0.5934102">
+												<SimplePredicate field="LSTAT" operator="lessThan" value="29.605"/>
+											</Node>
+											<Node id="35" score="0.14984396">
+												<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="29.605"/>
+											</Node>
+										</Node>
+										<Node id="27" defaultChild="36">
+											<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.9904001"/>
+											<Node id="36" score="0.23141442">
+												<SimplePredicate field="B" operator="lessThan" value="16.244999"/>
+											</Node>
+											<Node id="37" defaultChild="46">
+												<SimplePredicate field="B" operator="greaterOrEqual" value="16.244999"/>
+												<Node id="46" defaultChild="52">
+													<SimplePredicate field="RM" operator="lessThan" value="6.263"/>
+													<Node id="52" score="0.8991439">
+														<SimplePredicate field="LSTAT" operator="lessThan" value="29.74"/>
+													</Node>
+													<Node id="53" score="0.36717674">
+														<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="29.74"/>
+													</Node>
+												</Node>
+												<Node id="47" score="0.55651647">
+													<SimplePredicate field="RM" operator="greaterOrEqual" value="6.263"/>
+												</Node>
+											</Node>
+										</Node>
+									</Node>
+									<Node id="21" score="0.5716649">
+										<SimplePredicate field="PTRATIO" operator="greaterOrEqual" value="20.95"/>
+									</Node>
+								</Node>
+								<Node id="15" defaultChild="22">
+									<SimplePredicate field="CRIM" operator="greaterOrEqual" value="5.7819"/>
+									<Node id="22" defaultChild="28">
+										<SimplePredicate field="NOX" operator="lessThan" value="0.6695"/>
+										<Node id="28" score="0.22921248">
+											<SimplePredicate field="AGE" operator="lessThan" value="70.8"/>
+										</Node>
+										<Node id="29" score="0.6633342">
+											<SimplePredicate field="AGE" operator="greaterOrEqual" value="70.8"/>
+										</Node>
+									</Node>
+									<Node id="23" defaultChild="30">
+										<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.6695"/>
+										<Node id="30" defaultChild="38">
+											<SimplePredicate field="LSTAT" operator="lessThan" value="19.645"/>
+											<Node id="38" score="0.5941635">
+												<SimplePredicate field="CRIM" operator="lessThan" value="13.6366005"/>
+											</Node>
+											<Node id="39" score="0.27618596">
+												<SimplePredicate field="CRIM" operator="greaterOrEqual" value="13.6366005"/>
+											</Node>
+										</Node>
+										<Node id="31" defaultChild="40">
+											<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="19.645"/>
+											<Node id="40" defaultChild="48">
+												<SimplePredicate field="LSTAT" operator="lessThan" value="28.665"/>
+												<Node id="48" score="0.17043874">
+													<SimplePredicate field="LSTAT" operator="lessThan" value="20.115"/>
+												</Node>
+												<Node id="49" score="0.4092442">
+													<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="20.115"/>
+												</Node>
+											</Node>
+											<Node id="41" score="0.24565993">
+												<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="28.665"/>
+											</Node>
+										</Node>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="10">
+				<True/>
+				<TreeModel functionName="regression" missingValueStrategy="defaultChild" splitCharacteristic="binarySplit" x-mathContext="float">
+					<MiningSchema>
+						<MiningField name="CRIM"/>
+						<MiningField name="NOX"/>
+						<MiningField name="RM"/>
+						<MiningField name="DIS"/>
+						<MiningField name="RAD"/>
+						<MiningField name="TAX"/>
+						<MiningField name="PTRATIO"/>
+						<MiningField name="B"/>
+						<MiningField name="LSTAT"/>
+					</MiningSchema>
+					<Node id="1" defaultChild="2">
+						<True/>
+						<Node id="2" defaultChild="4">
+							<SimplePredicate field="LSTAT" operator="lessThan" value="5.4399996"/>
+							<Node id="4" defaultChild="8">
+								<SimplePredicate field="DIS" operator="lessThan" value="3.20745"/>
+								<Node id="8" score="1.9888324">
+									<SimplePredicate field="LSTAT" operator="lessThan" value="5.205"/>
+								</Node>
+								<Node id="9" score="0.767827">
+									<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="5.205"/>
+								</Node>
+							</Node>
+							<Node id="5" defaultChild="10">
+								<SimplePredicate field="DIS" operator="greaterOrEqual" value="3.20745"/>
+								<Node id="10" defaultChild="16">
+									<SimplePredicate field="RM" operator="lessThan" value="7.433"/>
+									<Node id="16" defaultChild="24">
+										<SimplePredicate field="NOX" operator="lessThan" value="0.52250004"/>
+										<Node id="24" score="0.5770574">
+											<SimplePredicate field="NOX" operator="lessThan" value="0.4005"/>
+										</Node>
+										<Node id="25" score="1.231339">
+											<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.4005"/>
+										</Node>
+									</Node>
+									<Node id="17" score="0.43033805">
+										<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.52250004"/>
+									</Node>
+								</Node>
+								<Node id="11" score="1.6771822">
+									<SimplePredicate field="RM" operator="greaterOrEqual" value="7.433"/>
+								</Node>
+							</Node>
+						</Node>
+						<Node id="3" defaultChild="6">
+							<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="5.4399996"/>
+							<Node id="6" defaultChild="12">
+								<SimplePredicate field="LSTAT" operator="lessThan" value="11.674999"/>
+								<Node id="12" defaultChild="18">
+									<SimplePredicate field="RM" operator="lessThan" value="7.183"/>
+									<Node id="18" score="1.6850001">
+										<SimplePredicate field="DIS" operator="lessThan" value="1.29105"/>
+									</Node>
+									<Node id="19" defaultChild="26">
+										<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.29105"/>
+										<Node id="26" score="0.73486894">
+											<SimplePredicate field="RM" operator="lessThan" value="6.0620003"/>
+										</Node>
+										<Node id="27" score="0.9306493">
+											<SimplePredicate field="RM" operator="greaterOrEqual" value="6.0620003"/>
+										</Node>
+									</Node>
+								</Node>
+								<Node id="13" score="1.3996606">
+									<SimplePredicate field="RM" operator="greaterOrEqual" value="7.183"/>
+								</Node>
+							</Node>
+							<Node id="7" defaultChild="14">
+								<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="11.674999"/>
+								<Node id="14" defaultChild="20">
+									<SimplePredicate field="LSTAT" operator="lessThan" value="19.83"/>
+									<Node id="20" score="0.45425645">
+										<SimplePredicate field="B" operator="lessThan" value="116.024994"/>
+									</Node>
+									<Node id="21" defaultChild="28">
+										<SimplePredicate field="B" operator="greaterOrEqual" value="116.024994"/>
+										<Node id="28" defaultChild="34">
+											<SimplePredicate field="TAX" operator="lessThan" value="280.5"/>
+											<Node id="34" score="0.9104031">
+												<SimplePredicate field="LSTAT" operator="lessThan" value="18.43"/>
+											</Node>
+											<Node id="35" score="0.2217259">
+												<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="18.43"/>
+											</Node>
+										</Node>
+										<Node id="29" defaultChild="36">
+											<SimplePredicate field="TAX" operator="greaterOrEqual" value="280.5"/>
+											<Node id="36" defaultChild="42">
+												<SimplePredicate field="CRIM" operator="lessThan" value="22.2054"/>
+												<Node id="42" score="0.5888028">
+													<SimplePredicate field="RAD" operator="lessThan" value="4.5"/>
+												</Node>
+												<Node id="43" score="0.7292401">
+													<SimplePredicate field="RAD" operator="greaterOrEqual" value="4.5"/>
+												</Node>
+											</Node>
+											<Node id="37" score="0.21992424">
+												<SimplePredicate field="CRIM" operator="greaterOrEqual" value="22.2054"/>
+											</Node>
+										</Node>
+									</Node>
+								</Node>
+								<Node id="15" defaultChild="22">
+									<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="19.83"/>
+									<Node id="22" defaultChild="30">
+										<SimplePredicate field="PTRATIO" operator="lessThan" value="19.650002"/>
+										<Node id="30" score="0.15563063">
+											<SimplePredicate field="RM" operator="lessThan" value="4.9145"/>
+										</Node>
+										<Node id="31" score="0.65403837">
+											<SimplePredicate field="RM" operator="greaterOrEqual" value="4.9145"/>
+										</Node>
+									</Node>
+									<Node id="23" defaultChild="32">
+										<SimplePredicate field="PTRATIO" operator="greaterOrEqual" value="19.650002"/>
+										<Node id="32" defaultChild="38">
+											<SimplePredicate field="NOX" operator="lessThan" value="0.675"/>
+											<Node id="38" score="0.14084883">
+												<SimplePredicate field="CRIM" operator="lessThan" value="0.22863"/>
+											</Node>
+											<Node id="39" score="0.5014351">
+												<SimplePredicate field="CRIM" operator="greaterOrEqual" value="0.22863"/>
+											</Node>
+										</Node>
+										<Node id="33" defaultChild="40">
+											<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.675"/>
+											<Node id="40" defaultChild="44">
+												<SimplePredicate field="NOX" operator="lessThan" value="0.6965"/>
+												<Node id="44" score="0.09565547">
+													<SimplePredicate field="DIS" operator="lessThan" value="1.5981"/>
+												</Node>
+												<Node id="45" defaultChild="48">
+													<SimplePredicate field="DIS" operator="greaterOrEqual" value="1.5981"/>
+													<Node id="48" score="0.2977082">
+														<SimplePredicate field="RM" operator="lessThan" value="6.608"/>
+													</Node>
+													<Node id="49" score="0.06543627">
+														<SimplePredicate field="RM" operator="greaterOrEqual" value="6.608"/>
+													</Node>
+												</Node>
+											</Node>
+											<Node id="41" defaultChild="46">
+												<SimplePredicate field="NOX" operator="greaterOrEqual" value="0.6965"/>
+												<Node id="46" score="0.39513543">
+													<SimplePredicate field="LSTAT" operator="lessThan" value="30.72"/>
+												</Node>
+												<Node id="47" score="0.17380396">
+													<SimplePredicate field="LSTAT" operator="greaterOrEqual" value="30.72"/>
+												</Node>
+											</Node>
+										</Node>
+									</Node>
+								</Node>
+							</Node>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+		</Segmentation>
+	</MiningModel>
+</PMML>
